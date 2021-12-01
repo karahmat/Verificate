@@ -140,6 +140,7 @@ router.post('/login', async (req,res) => {
     try {
         const user = await User.login(email,password); //static method
         const wallet = web3.eth.accounts.decrypt(user.encryptedJson, password);        
+        console.log(wallet);
         const token = createToken(user._id, wallet.address);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here
         res.status(200).json( { userId: user._id, email: user.email, walletAddress: wallet.address } )
