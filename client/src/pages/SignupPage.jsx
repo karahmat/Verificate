@@ -18,7 +18,7 @@ const initialState = {
     email: '',
     password: '',
     domain: '', 
-    passphrase: '',
+    issuer: '',
   };  
 
 export default function SignupPage( {login, setLogin} ) {
@@ -41,7 +41,7 @@ export default function SignupPage( {login, setLogin} ) {
       }
     
     const findFormErrors = () => {
-        const {email, password, domain, passphrase} = formInputs;
+        const {email, password, domain, issuer} = formInputs;
         const newErrors = {};
         const verifyEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;        
         // email error
@@ -70,9 +70,9 @@ export default function SignupPage( {login, setLogin} ) {
             newErrors.domainError = true;
         }
 
-        if (!passphrase || passphrase === '') {
-            newErrors.passphrase = 'cannot be blank!';
-            newErrors.passphrase = true;
+        if (!issuer || issuer === '') {
+            newErrors.issuer = 'cannot be blank!';
+            newErrors.issuerError = true;
         }
 
         return newErrors;
@@ -128,7 +128,7 @@ export default function SignupPage( {login, setLogin} ) {
                 
                 <FormTextField id="password-input" name="password" label="Set password" type="password" autoComplete="current-password" required minLength="8" onChange={handleInputChange} helperText={ errors?.password !== "" && errors?.password !== undefined ? errors.password : "Password must be 8 characters long"}  error={errors?.passwordError} />                
                 <FormTextField id="domain-nput" name="domain" label="Enter domain" variant="outlined" helperText={ errors?.domain !=="" && errors?.domain !== undefined ? errors.domain : "Enter the domain of your organisation (including http:// or https://)"} required onChange={handleInputChange} error={errors?.domainError}/>
-                <FormTextField id="passphrase-input" name="passphrase" label="Enter passphrase" variant="outlined" required onChange={handleInputChange} helperText={ errors?.passphrase !== "" && errors?.passphrase !== undefined ? errors.phrase : "The passphrase is needed later"} error={errors?.passphrase}  />
+                <FormTextField id="issuer-input" name="issuer" label="Enter Name of Instituition" variant="outlined" required onChange={handleInputChange} helperText={ errors?.issuer !== "" && errors?.issuer !== undefined ? errors.issuer : ""} error={errors?.issuerError}  />
                 { isLoading ? (
                     <LinearProgress />
                 ) : (

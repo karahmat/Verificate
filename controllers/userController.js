@@ -5,6 +5,7 @@ const Web3 = require('web3');
 const web3 = new Web3();
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const EthereumNet = require('../models/ethereumNet');
 const { requireAuth } = require('../middleware/authMiddleware');
 
 //Dependencies needed to make a wallet
@@ -100,6 +101,9 @@ router.post('/signup', async (req,res) => {
         const user = await User.create({
             email: req.body.email,
             password: req.body.password, 
+            domain: req.body.domain, 
+            domainValidated: false, 
+            issuer: req.body.issuer,
             encryptedJson: encryptedJson
         });
         
@@ -121,11 +125,16 @@ router.get('/jwt', requireAuth, async (req,res) => {
     
     try {        
         const user = await User.findOne({_id: req.profile.id});
+        const ethereumAdd = await EthereumNet.find({userId: req.profile.id});
         
         res.status(201).json({
-            userId: user._id,            
-            email: user.email,
-            walletAddress: req.profile.walletAddress             
+            userId: user._id, 
+            email: user.email, 
+            domain: user.domain, 
+            issuer: user.issuer, 
+            domainValidated: user.domainValidated,
+            contractAddress: ethereumAdd,
+            walletAddress: req.profile.walletAddress         
         });
 
     } catch (err) {
@@ -138,12 +147,18 @@ router.post('/login', async (req,res) => {
     const {email, password} = req.body;
     
     try {
-        const user = await User.login(email,password); //static method
-        const wallet = web3.eth.accounts.decrypt(user.encryptedJson, password);        
-        console.log(wallet);
+        const user = await User.login(email,password); //static method        
+        const wallet = web3.eth.accounts.decrypt(user.encryptedJson, password);                
         const token = createToken(user._id, wallet.address);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here
-        res.status(200).json( { userId: user._id, email: user.email, walletAddress: wallet.address } )
+        res.status(200).json({ 
+            userId: user._id, 
+            email: user.email, 
+            domain: user.domain, 
+            issuer: user.issuer, 
+            domainValidated: user.domainValidated,
+            contractAddress: user.contractAddress,
+            walletAddress: wallet.address})
     }
     catch (err) {
         const errors = handleErrors(err);

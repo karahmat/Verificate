@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect} from 'react';
+import React, {useState, useReducer} from 'react';
 import {reducer} from '../utils/reducer';
 import {styled} from '@mui/material/styles';
 import Container from '@mui/material/Container';

@@ -70,7 +70,7 @@ export default function Navbar() {
                 >
                     AzCredify
                 </Typography>
-
+                { loggedIn && 
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
                     <IconButton
                         size="large"
@@ -82,6 +82,7 @@ export default function Navbar() {
                     >
                     <MenuIcon />
                     </IconButton>
+                    
                     <Menu
                         id="menu-appbar"
                         anchorEl={anchorElNav}
@@ -106,7 +107,9 @@ export default function Navbar() {
                         </MenuItem>
                     ))}
                     </Menu>
+                    
                 </Box>
+                }
                 <Typography
                     variant="h6"
                     noWrap
@@ -115,7 +118,10 @@ export default function Navbar() {
                 >
                     AzCredify
                 </Typography>
+                
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
+                    { loggedIn && 
+                    <>
                     {pages.map((page, index) => (
                     <Button
                         key={page}
@@ -125,6 +131,8 @@ export default function Navbar() {
                         <Link href={links[index]} sx={{ color: 'white' }} underline="none">{page}</Link>
                     </Button>
                     ))}
+                    </>
+                    }
                 </Box>
                 
                 {loggedIn === false && (

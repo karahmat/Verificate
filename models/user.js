@@ -17,6 +17,24 @@ const userSchema = new Schema(
             required: [true, 'Please enter a password'],
             minlength: [8, 'Minimum password length is 8 characters']
         },
+        domain: {
+            type: String, 
+            required: [true, 'Please enter domain'], 
+            validate: {
+                validator: function(value) {
+                  return value.slice(0,5).includes("http");
+                },
+                message: props => `${props.value} must start with http or https!`
+            },
+            
+        },
+        domainValidated: {
+            type: Boolean
+        },
+        issuer: {
+            type: String, 
+            required: [true, 'Please enter name of instituition']
+        },               
         encryptedJson: {
             type: Object,        
             required: [true, 'wallet Id does not exist']        

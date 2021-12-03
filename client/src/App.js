@@ -16,6 +16,10 @@ function App() {
   const [userData, setUserData] = useState({        
     userId: '',
     email: '',
+    domain: '',
+    domainValidated: '',
+    issuer: '',
+    contractAddress: '',
     walletAddress: ''    
   });
 
@@ -28,7 +32,7 @@ function App() {
         method: 'GET',
         headers: { 'content-type': 'application/json' },
       })
-      const data = await response.json()
+      const data = await response.json();      
 
       if (data.userId) {
         setUserData(data)        
