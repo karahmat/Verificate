@@ -154,14 +154,16 @@ export default function SubmitDoc() {
             {userData.userId !== "" && userData.contractAddress.length > 0 && (
                 
                 <>
-                <Box sx={{ display:"flex", alignItems: "center", justifyContent: "space-between" }}>
+                
                 { userData.contractAddress.map(contract => 
-                        <>
-                        <p>{contract.nameOfNet}:    </p>
-                        <Box component="p" sx={{ wordBreak: "break-all", color: "error.main" }}>{contract.address}</Box>
-                        </>
+                        
+                        <Box sx={{ display:"flex", alignItems: "center", justifyContent: "space-between" }}>
+                            <p>{contract.nameOfNet}:    </p>
+                            <Box component="p" sx={{ wordBreak: "break-all", color: "error.main" }}>{contract.address}</Box>
+                        </Box>
+                        
                 )}
-                </Box>
+                
 
                 <form noValidate autoComplete="off">
                     <FormControl variant="filled" color="success" fullWidth margin="normal" sx={{maxWidth: "300px"}}>
@@ -191,9 +193,10 @@ export default function SubmitDoc() {
                     <Button variant="contained" endIcon={<SendIcon />} type="submit" onClick={handleSubmit}>Submit</Button>                        
                     )}
                     { isUploading && (
-                        <LinearProgress />
+                        <LinearProgress />                        
                     )}
                 </form>
+                <Typography variant="subtitle2" sx={{ mt: 2 }}>Upon successful submission, the student will receive an email from you with the PDF file of the certificate, as well as a QR Code and a link to verify his certificate.</Typography>
                 </>
             )}
         

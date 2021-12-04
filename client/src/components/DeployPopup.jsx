@@ -72,7 +72,7 @@ export default function DeployPopup({method, setCertificates}) {
             <Button variant="contained" onClick={handleClickOpen}>{method === "deploy" ? "Deploy" : "Load Certificates"}</Button>
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Smart Contract</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
                     To deploy or interact with your Smart Contract, you will need to re-enter your password.

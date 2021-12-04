@@ -12,8 +12,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const sendEmail = async(receiver, txnHash, fileName, filePath, rootServer) => {
-  console.log(process.env.NODEMAILER_PW);
+const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootServer) => {
+  console.log(pdfFileRaw);
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.yahoo.com',
@@ -25,22 +25,23 @@ const sendEmail = async(receiver, txnHash, fileName, filePath, rootServer) => {
     },
   });
 
-  const pdfFile = {
-      filename: fileName, 
-      path: filePath
-  }
-
+  
   //To create QR code file
   const qrCodeFile = `${appRoot}/../uploads/${Date.now()}_qrcode.png`;
   await QRCode.toFile(qrCodeFile, `${rootServer}/${txnHash}`);
   // rootServer = http://domain.name.com/documents/testnet (whereby testnet refers to either {localhost, rinkeby, mainnet}, where the smart contract is deployed)    
   // upload the QR code to cloudinary and optain the url of the stored file. I have to do this since most web email like Google Mail cannot read base64 images.
   const {url} = await cloudinary.uploader.upload(qrCodeFile);
+
+  const pdfFile = {
+    filename: pdfFileRaw.filename, 
+    path: pdfFileRaw.path
+  }
   
   const htmlTemplate = `
-  <p>Dear student, </p>
-  <p>Congratulations on your graduation! Your PDF certificate is attached </p>
-  <p>Your certificate has also been stored on the Ethereum blockchain with the following transaction hash: ${txnHash}. With this your certificate can never be tampered with. </p>
+  <p>Dear ${receiverName}, </p>
+  <p>Congratulations on your graduation! Your PDF certificate is attached. </p>
+  <p>Your certificate has also been stored on the Ethereum blockchain with the following transaction hash: ${txnHash}. With this, your certificate can never be tampered with. </p>
   <p>You can ask your future employers to either click on this <a href="${rootServer}/${txnHash}">link</a> or scan the QR code below to verify the certificate</p>
   <img src=${url} alt="qr code image" />
   `;
@@ -48,9 +49,9 @@ const sendEmail = async(receiver, txnHash, fileName, filePath, rootServer) => {
   // send mail with defined transport object
   const info = await transporter.sendMail({
     from: process.env.NODEMAILER_EMAIL, // sender address
-    to: receiver, // list of receivers
+    to: receiverEmail, // list of receivers
     subject: "Your Graduation Certificate", // Subject line
-    text: "Dear student, Congratulations on your graduation. Your transaction hash will serve as a verification tool: " + txnHash + '. Link to QR Code: ' + url, // plain text body
+    text: "Dear " + receiverName + ", Congratulations on your graduation. Your transaction hash will serve as a verification tool: " + txnHash + '. Link to QR Code: ' + url, // plain text body
     html: htmlTemplate, // html body
     attachments: pdfFile
   });

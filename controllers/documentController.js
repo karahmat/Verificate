@@ -120,7 +120,7 @@ router.post('/new', requireAuth, async(req, res) => {
 
             const transactionReceipt = await newCertificate(testnetObj[req.body.testnet], wallet.address, wallet.privateKey, deployedContract.address, certificateParams);
             const rootPath = `${req.protocol}://${req.hostname}:${process.env.REACT_PORT}/documents/${req.body.testnet}`; 
-            await sendEmail(req.body.studentEmail, transactionReceipt.transactionHash, file.filename, file.path, rootPath);
+            await sendEmail(req.body.studentEmail, req.body.studentName, transactionReceipt.transactionHash, file, rootPath);
 
             fs.unlinkSync(`./uploads/${file.filename}`);            
             
@@ -156,7 +156,7 @@ router.post('/verifyIpfs', async (req,res) => {
 });
 
 
-router.get('/verify/:testnet/:txnHash', requireAuth, async (req, res) => {            
+router.get('/verify/:testnet/:txnHash', async (req, res) => {            
     
     try {
         const testnetObj = {

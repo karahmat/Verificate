@@ -8,10 +8,9 @@ const getTransactionData = async (transactionHash, testnetArg) => {
         process.env.SUPER_PRIVATEKEY,
         testnetArg
     );
-
-    const web3 = new Web3(provider); 
-
-    const result = await web3.eth.getTransaction(transactionHash);
+    
+    const web3 = new Web3(provider);     
+    const result = await web3.eth.getTransaction(transactionHash);    
     const tx_data = result.input;
     const input_data = '0x' + tx_data.slice(10); // get only data without function selector
 
