@@ -13,7 +13,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
 
-export default function DeployPopup() {
+export default function DeployPopup({method, setCertificates}) {
+    console.log("Method: ", method);
     const userData = useContext(UserContext);               
     const [etherErrorMsg, setEtherErrorMsg] = useState();
     const [deployState, setDeployState] = useState({
@@ -41,7 +42,7 @@ export default function DeployPopup() {
 
     const handleDeployment = async () => {
         setOpen(false);
-        const response = await fetch("/api/documents/deploy", {
+        const response = await fetch(`/api/documents/${method}`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },  
             body: JSON.stringify({
@@ -53,8 +54,13 @@ export default function DeployPopup() {
 
         const data = await response.json();
         
-        if(data.data === "Success") {            
-            window.location.assign('/submitDoc');
+        if(data.data === "Success") {     
+            if (method === "deploy") {
+                window.location.assign('/submitDoc');
+            } else {
+                console.log(data.result);
+                setCertificates(data.result);
+            }
         } else if (data.errors) {                        
             setEtherErrorMsg(data.errors);
         }
@@ -63,13 +69,13 @@ export default function DeployPopup() {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleClickOpen}>Deploy</Button>
+            <Button variant="contained" onClick={handleClickOpen}>{method === "deploy" ? "Deploy" : "Load Certificates"}</Button>
 
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Subscribe</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
-                    To deploy your Smart Contract, you will need to re-enter your password.
+                    To deploy or interact with your Smart Contract, you will need to re-enter your password.
                 </DialogContentText>
                 <FormControl variant="filled" color="success" fullWidth margin="normal" sx={{maxWidth: "300px"}}>
                     <InputLabel id="testnet">Choose an ETH Network</InputLabel>
@@ -100,7 +106,7 @@ export default function DeployPopup() {
                 </DialogContent>
                 <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleDeployment}>Deploy</Button>
+                <Button onClick={handleDeployment}>{method === "deploy" ? "Deploy" : "Load Certificates"}</Button>
                 </DialogActions>
             </Dialog>
         </div>

@@ -15,7 +15,8 @@ export default function Profile() {
             <Typography variant="body1" sx={{mb: 2}}>Domain: {userData.domain}
                 { userData.domainValidated ? <CheckCircleIcon color="success" /> : <CancelOutlinedIcon color="warning" />  }
             </Typography>            
-            <Typography variant="body1" sx={{mb: 2}}>Wallet Address: {userData.walletAddress}</Typography>
+            <Typography variant="body1" sx={{mb: 2, wordBreak: "break-all"}}>Wallet Address: {userData.walletAddress}</Typography>
+            
             {/* {userData.contractAddress === "" && (
                 <>
                 <Typography variant="p">Please deploy your smart contract first before you can submit any document.</Typography>

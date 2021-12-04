@@ -68,7 +68,7 @@ export default function Navbar() {
                     component="div"
                     sx={{ mr: 2, display: { xs: 'none', sm: 'flex' } }}
                 >
-                    AzCredify
+                    <Link href="/" sx={{ color: 'white' }} underline="none">AzCredify</Link>
                 </Typography>
                 { loggedIn && 
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
@@ -116,7 +116,7 @@ export default function Navbar() {
                     component="div"
                     sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}
                 >
-                    AzCredify
+                    <Link href="/" sx={{ color: 'white' }} underline="none">AzCredify</Link>
                 </Typography>
                 
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
@@ -137,8 +137,8 @@ export default function Navbar() {
                 
                 {loggedIn === false && (
                 <>
-                <Link href="/signup" sx={{ color: 'white' }} underline="none"><MenuItem color="inherit">Register</MenuItem></Link>                
                 <Link href="/login" sx={{ color: 'white' }} underline="none"><MenuItem color="inherit">Login</MenuItem></Link>                
+                <Link href="/signup" sx={{ color: 'white' }} underline="none"><MenuItem color="inherit"><Button variant="contained">Register</Button></MenuItem></Link>                
                 </>
                 )}
                 {loggedIn && (

@@ -8,6 +8,7 @@ import SubmitDoc from './pages/SubmitDoc';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import SendPhrase from './pages/SendPhrase';
+import VerifyDoc from './pages/VerifyDoc';
 import {Switch, Route} from 'react-router';
 
 export const UserContext = createContext();
@@ -79,6 +80,9 @@ function App() {
           </Route>
           <Route path='/sendPhrase' >
             <SendPhrase />
+          </Route>
+          <Route path='/documents/:testnet/:txnHash'>
+            <VerifyDoc />
           </Route>
         </Switch> 
       </UserContext.Provider>        

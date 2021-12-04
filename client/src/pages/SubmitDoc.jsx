@@ -146,7 +146,7 @@ export default function SubmitDoc() {
             {userData.userId !== "" && userData.contractAddress.length === 0 && (
                 <>
                 <Typography variant="h6" color="error.main">Please deploy your contract first</Typography>
-                <DeployPopup />
+                <DeployPopup method="deploy" />
                 </>
             )}
            
@@ -157,8 +157,8 @@ export default function SubmitDoc() {
                 <Box sx={{ display:"flex", alignItems: "center", justifyContent: "space-between" }}>
                 { userData.contractAddress.map(contract => 
                         <>
-                        <p>{contract.nameOfNet}</p>
-                        <p>{contract.address}</p>
+                        <p>{contract.nameOfNet}:    </p>
+                        <Box component="p" sx={{ wordBreak: "break-all", color: "error.main" }}>{contract.address}</Box>
                         </>
                 )}
                 </Box>

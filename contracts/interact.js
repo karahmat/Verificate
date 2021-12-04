@@ -18,5 +18,25 @@ const newCertificate = async(testnetArg, addressArg, privateKeyArg, contractAdd,
     return transactionReceipt;    
 }
 
+const getAllCertificates = async(testnetArg, addressArg, privateKeyArg, contractAdd) => {   
+            
+    const provider = new HDWalletProvider(
+        privateKeyArg,
+        testnetArg,
+    );
 
-module.exports = newCertificate;
+    const web3 = new Web3(provider);    
+    let contract = new web3.eth.Contract(abi, contractAdd);
+    
+    const studentIDs = await contract.methods.getStudentIDs().call({from: addressArg}); 
+    const certificates = [];
+    for (const studentID of studentIDs) {
+        const certificate = await contract.methods.getCertificateInfo(studentID).call({from: addressArg});
+        certificates.push({studentID: studentID, hash: certificate["0"], name: certificate["1"]});
+    }
+        
+    return certificates;
+}
+
+
+module.exports = {newCertificate, getAllCertificates};

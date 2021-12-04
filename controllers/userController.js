@@ -10,9 +10,7 @@ const { requireAuth } = require('../middleware/authMiddleware');
 
 //Dependencies needed to make a wallet
 const bip39 = require('bip39');
-const hdkey = require('hdkey');
-const ethUtil = require('ethereumjs-util');
-const ethTx = require('ethereumjs-tx');
+const {hdkey} = require('ethereumjs-wallet');
 
 
 //function to handle errors
@@ -67,36 +65,25 @@ router.post('/signup', async (req,res) => {
         const mnemonic = bip39.generateMnemonic(); //generates string        
         const seed = await bip39.mnemonicToSeed(mnemonic); //creates seed buffer
 
-        /* Generate the root of the node tree and get the Private and Public Key:
-        In most of cryptography, operations are performed at byte level. 
-        It is converted to hex here to easily verify expected behaviour 
-        in human readable format.
-        */
-        const root = hdkey.fromMasterSeed('0x' + Buffer.from(seed, 'hex'));        
-        const masterPrivateKey = root.privateKey.toString('hex');        
-        
+        // Generate the root of the node tree and get the Private and Public Key:        
+        const hdwallet = hdkey.fromMasterSeed(seed);        
+                
         /*Create the address: 
         In Ethereum, each address is considered an account. 
         An HD wallet is a public/private key tree all starting from a master node. 
         The tree is represented by a derivation path. 
-        The default derivation path for Ethereum is m/44'/60'/0'/0. 
+        The default derivation path for Ethereum is m/44'/60'/0'/0/{accountIndex}. 
         Each number in that path represents a certain level in the tree above.
         -- 44 — BIP 44 Purpose
         -- 60 — Ethereum’s coin type
         -- 0 — Account 0
         -- 0 — Chain 0
         */
-        // const addrNode = root.derive("m/44'/60'/0'/0/0");         
-        // const pubKey = ethUtil.privateToPublic(addrNode._privateKey);
-        // const addr = '0x' + ethUtil.publicToAddress(pubKey).toString('hex');
-        
-        /* 
-        From the derived public key, we compute the checksum to verify 
-        that it is indeed an ethereum address.        
-        */
-        // const address = ethUtil.toChecksumAddress(addr);
-        const address = web3.eth.accounts.privateKeyToAccount(masterPrivateKey).address;
-        const encryptedJson = web3.eth.accounts.encrypt(masterPrivateKey, req.body.password); 
+        const wallet_hdpath = "m/44'/60'/0'/0/0";                 
+        const wallet = hdwallet.derivePath(wallet_hdpath).getWallet();        
+        const privateKey = wallet.privateKey.toString('hex');        
+        const address = wallet.getAddressString();
+        const encryptedJson = web3.eth.accounts.encrypt(privateKey, req.body.password); 
 
         const user = await User.create({
             email: req.body.email,
@@ -150,7 +137,8 @@ router.post('/login', async (req,res) => {
         const user = await User.login(email,password); //static method        
         const wallet = web3.eth.accounts.decrypt(user.encryptedJson, password);                
         const token = createToken(user._id, wallet.address);
-        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here
+        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here  
+        console.log(wallet);      
         res.status(200).json({ 
             userId: user._id, 
             email: user.email, 
@@ -158,7 +146,7 @@ router.post('/login', async (req,res) => {
             issuer: user.issuer, 
             domainValidated: user.domainValidated,
             contractAddress: user.contractAddress,
-            walletAddress: wallet.address})
+            walletAddress: wallet.address});        
     }
     catch (err) {
         const errors = handleErrors(err);

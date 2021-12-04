@@ -15,7 +15,7 @@ const getTransactionData = async (transactionHash, testnetArg) => {
     const tx_data = result.input;
     const input_data = '0x' + tx_data.slice(10); // get only data without function selector
 
-    const params = await web3.eth.abi.decodeParameters(['string', 'string', 'string'], input_data);
+    const params = await web3.eth.abi.decodeParameters(['string', 'string', 'string', 'string'], input_data);
     return params;
     
 }
