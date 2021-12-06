@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
@@ -10,7 +10,8 @@ import { UserContext } from '../App.js';
 
 export default function VerifyDomain() {
     const userData = useContext(UserContext);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [verified, setVerified] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,6 +20,22 @@ export default function VerifyDomain() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleVerify = async() => {
+    //redo - verify must be done through the backend!
+
+    try {
+      console.log(userData.domain + "/" + userData.walletAddress.slice(0,15) + ".txt");
+      const response = await fetch(userData.domain + "/" + userData.walletAddress.slice(0,15) + ".txt");     
+      if (response.status === 200 && userData.walletAddress.slice(0,15) === response.data) {
+          console.log(response.data);
+          // setVerified(true);
+          // setOpen(false);
+      }
+    } catch (err) {
+          console.log(err);
+    }    
+  }
 
   return (
     <div>
@@ -37,7 +54,7 @@ export default function VerifyDomain() {
           </DialogContentText>          
         </DialogContent>
         <DialogActions>          
-          <Button variant="contained" onClick={handleClose}>Verify Domain</Button>
+          <Button variant="contained" onClick={handleVerify}>Verify Domain</Button>
         </DialogActions>
       </Dialog>
     </div>
