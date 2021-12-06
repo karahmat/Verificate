@@ -106,7 +106,11 @@ export default function SignupPage( {login, setLogin} ) {
                                 
                 history.push({ 
                     pathname: '/sendPhrase',
-                    state: data.dataMnemonic,
+                    state: {
+                        mnemonic: data.dataMnemonic,
+                        privateKeys: data.privateKeys, 
+                        addresses: data.addresses
+                    },
                 }); 
             
                 

@@ -32,11 +32,12 @@ export default function VerifyDomain() {
             The domain in your profile is not yet confirmed. 
             To verify your domain, create a blank text file with the filename: <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}.txt </Box>
              and publish it on: <Box component="span" sx={{ color: "secondary.main"}}>{userData?.domain}</Box>/
-            <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}.txt</Box>
+            <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}.txt.</Box> 
+            Thereafter, click on Verify Domain.
           </DialogContentText>          
         </DialogContent>
         <DialogActions>          
-          <Button onClick={handleClose}>Verify Domain</Button>
+          <Button variant="contained" onClick={handleClose}>Verify Domain</Button>
         </DialogActions>
       </Dialog>
     </div>

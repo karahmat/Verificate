@@ -19,7 +19,7 @@ export default function DeployPopup({method, setCertificates}) {
     const [etherErrorMsg, setEtherErrorMsg] = useState();
     const [deployState, setDeployState] = useState({
         testnet: '',
-        password: ''
+        privateKey: ''
     });
     
     
@@ -48,7 +48,7 @@ export default function DeployPopup({method, setCertificates}) {
             body: JSON.stringify({
                 userId: userData.userId, 
                 testnet: deployState.testnet, 
-                password: deployState.password
+                privateKey: deployState.privateKey
              })          
         });            
 
@@ -95,12 +95,12 @@ export default function DeployPopup({method, setCertificates}) {
                 <TextField
                     autoFocus
                     margin="dense"
-                    id="password"
-                    label="password"
+                    id="privateKey"
+                    label="Private Key"
                     type="password"
                     fullWidth
                     variant="standard"
-                    name="password"
+                    name="privateKey"
                     onChange={handleDeployInputChange}
                 />
                 </DialogContent>

@@ -3,7 +3,6 @@ const express = require('express');
 const router = express.Router();
 const Web3 = require('web3');
 const web3 = new Web3();
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const EthereumNet = require('../models/ethereumNet');
 const { requireAuth } = require('../middleware/authMiddleware');
@@ -11,7 +10,7 @@ const { requireAuth } = require('../middleware/authMiddleware');
 //Dependency to send email
 const sendEmail = require('../utils/sendEmail');
 
-//Dependencies needed to deploy and use the smart contract
+//Dependencies needed to deploy and interact with the smart contract
 const deployContract = require('../contracts/pseudoDeploy');
 const {newCertificate, getAllCertificates} = require('../contracts/interact');
 const getTransactionData = require('../contracts/getTransactionData');
@@ -52,9 +51,9 @@ const testnetObj = {
 router.post('/certificates', requireAuth, async(req, res) => {
     try {
         const user = await User.findOne({_id: req.profile.id});
-        const deployedContract = await EthereumNet.findOne({userId: req.profile.id, nameOfNet: req.body.testnet});
-        const wallet = web3.eth.accounts.decrypt(user.encryptedJson, req.body.password);  
-        const result = await getAllCertificates(testnetObj[req.body.testnet], wallet.address, wallet.privateKey, deployedContract.address);    
+        const deployedContract = await EthereumNet.findOne({userId: req.profile.id, nameOfNet: req.body.testnet});         
+        const {address} = web3.eth.accounts.privateKeyToAccount(req.body.privateKey);   
+        const result = await getAllCertificates(testnetObj[req.body.testnet], address, req.body.privateKey, deployedContract.address);    
         console.log(result);
         res.status(200).json({data: "Success", result: result});
     } catch (err) {
@@ -70,16 +69,15 @@ router.post('/deploy', requireAuth, async(req,res) => {
     if (req.profile.id === req.body.userId) {
         try {
             const user = await User.findOne({_id: req.body.userId});
-            const wallet = web3.eth.accounts.decrypt(user.encryptedJson, req.body.password);         
-            const contractAddress = await deployContract(testnetObj[req.body.testnet], wallet.address, wallet.privateKey);
+            const {address} = web3.eth.accounts.privateKeyToAccount(req.body.privateKey);                    
+            const contractAddress = await deployContract(testnetObj[req.body.testnet], address, req.body.privateKey);
             
             const ethNet = await EthereumNet.create({
                 userId: req.body.userId,
                 nameOfNet: req.body.testnet,
                 address: contractAddress
             });
-
-            console.log(contractAddress);  
+            
             res.status(200).json({data: "Success"});
         } catch (err) {
             console.log(err);
@@ -94,8 +92,7 @@ router.post('/new', requireAuth, async(req, res) => {
     try {
         const user = await User.findOne({_id: req.profile.id});
         const deployedContract = await EthereumNet.findOne({userId: req.profile.id, nameOfNet: req.body.testnet});
-        const wallet = web3.eth.accounts.decrypt(user.encryptedJson, req.body.password);         
-
+        
         const ipfsObj = {
             'localhost': {host: 'localhost', port: '5001', protocol: 'http'},
             'infura': {host: 'ipfs.infura.io', port: '5001', protocol: 'https', path: 'api/v0'}
@@ -118,7 +115,8 @@ router.post('/new', requireAuth, async(req, res) => {
                 issuerName: user.issuer
             };
 
-            const transactionReceipt = await newCertificate(testnetObj[req.body.testnet], wallet.address, wallet.privateKey, deployedContract.address, certificateParams);
+            const {address} = web3.eth.accounts.privateKeyToAccount(req.body.privateKey);
+            const transactionReceipt = await newCertificate(testnetObj[req.body.testnet], address, req.body.privateKey, deployedContract.address, certificateParams);
             const rootPath = `${req.protocol}://${req.hostname}:${process.env.REACT_PORT}/documents/${req.body.testnet}`; 
             await sendEmail(req.body.studentEmail, req.body.studentName, transactionReceipt.transactionHash, file, rootPath);
 

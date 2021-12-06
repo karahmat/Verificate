@@ -45,8 +45,8 @@ const handleErrors = (err) => {
 }
 
 const maxAge = 3 * 24 * 60 * 60; //in seconds
-const createToken = (id, walletAddress) => {
-    return jwt.sign({ id, walletAddress }, process.env.JWT_SECRET, {
+const createToken = (id ) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: maxAge,
     });
 };
@@ -55,8 +55,6 @@ const createToken = (id, walletAddress) => {
 router.post('/signup', async (req,res) => {
     
     try {                     
-        // const wallet = web3.eth.accounts.create();
-        // const encryptedJson = web3.eth.accounts.encrypt(wallet.privateKey, req.body.password);     
         
         /* Generate a mnemonic and seed: 
         HD Wallets are created by a random bit of data called a seed. 
@@ -79,25 +77,29 @@ router.post('/signup', async (req,res) => {
         -- 0 — Account 0
         -- 0 — Chain 0
         */
-        const wallet_hdpath = "m/44'/60'/0'/0/0";                 
-        const wallet = hdwallet.derivePath(wallet_hdpath).getWallet();        
-        const privateKey = wallet.privateKey.toString('hex');        
-        const address = wallet.getAddressString();
-        const encryptedJson = web3.eth.accounts.encrypt(privateKey, req.body.password); 
-
+        const privateKeys = [];
+        const addresses = [];
+        
+        for (let i=0; i<5; i++) {
+            const wallet_hdpath = `m/44'/60'/0'/0/${i}`;                 
+            const wallet = hdwallet.derivePath(wallet_hdpath).getWallet();        
+            privateKeys.push(wallet.privateKey.toString('hex'));        
+            addresses.push(wallet.getAddressString());
+        }
+        
         const user = await User.create({
             email: req.body.email,
             password: req.body.password, 
             domain: req.body.domain, 
             domainValidated: false, 
-            issuer: req.body.issuer,
-            encryptedJson: encryptedJson
+            issuer: req.body.issuer, 
+            walletAddress: addresses[0]            
         });
         
-        const token = createToken(user._id, address);
+        const token = createToken(user._id);
         //send cookie to browser, but it cannot be accessed by clicking document.cookie due to httpOnly: true
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here
-        res.status(201).json({ data: 'Success', dataMnemonic: mnemonic });   
+        res.status(201).json({ data: 'Success', dataMnemonic: mnemonic, privateKeys, addresses });   
     }
     catch (err) {   
         console.log(err);                         
@@ -120,8 +122,8 @@ router.get('/jwt', requireAuth, async (req,res) => {
             domain: user.domain, 
             issuer: user.issuer, 
             domainValidated: user.domainValidated,
-            contractAddress: ethereumAdd,
-            walletAddress: req.profile.walletAddress         
+            walletAddress: user.walletAddress,
+            contractAddress: ethereumAdd
         });
 
     } catch (err) {
@@ -134,19 +136,19 @@ router.post('/login', async (req,res) => {
     const {email, password} = req.body;
     
     try {
-        const user = await User.login(email,password); //static method        
-        const wallet = web3.eth.accounts.decrypt(user.encryptedJson, password);                
-        const token = createToken(user._id, wallet.address);
+        const user = await User.login(email,password); //static method                
+        const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here  
-        console.log(wallet);      
+             
         res.status(200).json({ 
             userId: user._id, 
             email: user.email, 
             domain: user.domain, 
             issuer: user.issuer, 
             domainValidated: user.domainValidated,
-            contractAddress: user.contractAddress,
-            walletAddress: wallet.address});        
+            walletAddress: user.walletAddress,
+            contractAddress: user.contractAddress 
+            });        
     }
     catch (err) {
         const errors = handleErrors(err);

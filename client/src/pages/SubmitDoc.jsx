@@ -62,7 +62,7 @@ export default function SubmitDoc() {
     }
 
     const findFormErrors = () => {
-        const {studentId, studentEmail, studentName, password} = formInputs;
+        const {studentId, studentEmail, studentName, privateKey} = formInputs;
         const newErrors = {};
         const verifyEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;        
         // email error
@@ -87,12 +87,12 @@ export default function SubmitDoc() {
         }
 
         // password error
-        if ( !password || password === '' ) {
-            newErrors.password = 'cannot be blank!'; 
-            newErrors.passwordError = true;
-        } else if ( password.length < 8 ) {
-            newErrors.password = 'password must be at least 8 characters long';
-            newErrors.passwordError = true;
+        if ( !privateKey || privateKey === '' ) {
+            newErrors.privateKey = 'cannot be blank!'; 
+            newErrors.privateKeyError = true;
+        } else if ( privateKey.length < 16 ) {
+            newErrors.privateKey = 'password must be at least 16 characters long';
+            newErrors.privateKeyError = true;
         }
 
         return newErrors;
@@ -154,11 +154,11 @@ export default function SubmitDoc() {
             {userData.userId !== "" && userData.contractAddress.length > 0 && (
                 
                 <>
-                
+                <Typography sx={{mt:2, mb:1.2}}>List of Smart Contracts</Typography>
                 { userData.contractAddress.map(contract => 
                         
-                        <Box sx={{ display:"flex", alignItems: "center", justifyContent: "space-between" }}>
-                            <p>{contract.nameOfNet}:    </p>
+                        <Box sx={{ display:"flex", alignItems: "center" }}>
+                            <Typography sx={{mr: 2}}>{contract.nameOfNet}:    </Typography>
                             <Box component="p" sx={{ wordBreak: "break-all", color: "error.main" }}>{contract.address}</Box>
                         </Box>
                         
@@ -186,7 +186,7 @@ export default function SubmitDoc() {
                     <FormTextField id="studentId-input" name="studentId" label="Enter Student Id" type="text" helperText={ errors?.studentId !== "" ? errors.studentId : ""}  required onChange={handleInputChange} error={errors?.studentIdError} />
                     <FormTextField id="email-input" name="studentEmail" label="Enter Student's Email" variant="outlined" type="email" required onChange={handleInputChange} helperText={ errors?.studentEmail !== "" ? errors.studentEmail : ""} error={errors?.studentEmailError} />                    
                     <FormTextField id="studentName-input" name="studentName" label="Enter Student Name" type="text" helperText={ errors?.studentName !== "" ? errors.studentName : ""} required onChange={handleInputChange} error={errors?.studentNameError} />                
-                    <FormTextField id="password-input" name="password" label="Enter your account password" type="password" helperText={ errors?.password !== "" ? errors.password : ""} required minLength="8" onChange={handleInputChange} error={errors?.passwordError} />                
+                    <FormTextField id="privateKey-input" name="privateKey" label="Enter your private key" type="password" helperText={ errors?.privateKey !== "" ? errors.privateKey : ""} required minLength="16" onChange={handleInputChange} error={errors?.privateKeyError} />                
 
                     { (etherErrorMsg?.ether !== '') && <Typography variant="p" sx={{ color: 'error.main' }}>{etherErrorMsg?.ether}</Typography>}
                     { isUploading === false && (
@@ -196,7 +196,7 @@ export default function SubmitDoc() {
                         <LinearProgress />                        
                     )}
                 </form>
-                <Typography variant="subtitle2" sx={{ mt: 2 }}>Upon successful submission, the student will receive an email from you with the PDF file of the certificate, as well as a QR Code and a link to verify his certificate.</Typography>
+                <Typography variant="subtitle2" sx={{ mt: 2 }}>Upon successful submission, the student will receive an email from you with the PDF file of the certificate, as well as a QR Code and a link to verify his/her certificate.</Typography>
                 </>
             )}
         

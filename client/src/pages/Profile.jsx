@@ -24,7 +24,7 @@ export default function Profile() {
                     </>
                }
             </Box>            
-            <Typography variant="body1" sx={{mb: 2, wordBreak: "break-all"}}>Wallet Address: {userData.walletAddress}</Typography>
+            
             
         </Container>
     )

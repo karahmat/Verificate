@@ -34,10 +34,9 @@ const userSchema = new Schema(
         issuer: {
             type: String, 
             required: [true, 'Please enter name of instituition']
-        },               
-        encryptedJson: {
-            type: Object,        
-            required: [true, 'wallet Id does not exist']        
+        }, 
+        walletAddress: {
+            type: String
         }
     }, 
     {
