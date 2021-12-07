@@ -34,7 +34,7 @@ With Azcredify,
 
 ## Digital Signing of Certificate
 The diagramm below illustrates the workflow when an education institute issues a certificate to the student:
-![Workflow Signature](https://imgur.com/a/GQhMpux)
+![Workflow Signature](https://imgur.com/a/GQhMpux.png)
 
 1. Institute issues and signs a document
 
@@ -46,7 +46,7 @@ The diagramm below illustrates the workflow when an education institute issues a
 
 ## Digital Verification of Certificate
 The diagramm below illustrates the workflow when an employer wants to verify that the certificate is authentic and has not been tampered with. 
-![Certificate Verification](https://imgur.com/SApqNcA)
+![Certificate Verification](https://imgur.com/SApqNcA.png)
 
 1. Student share the authenticity token and certificate with the employer. 
 
