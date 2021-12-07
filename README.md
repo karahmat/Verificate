@@ -47,6 +47,7 @@ The diagramm below illustrates the workflow when an education institute issues a
 ## Digital Verification of Certificate
 The diagramm below illustrates the workflow when an employer wants to verify that the certificate is authentic and has not been tampered with. 
 ![Certificate Verification](https://imgur.com/SApqNcA)
+
 1. Student share the authenticity token and certificate with the employer. 
 
 2. Employer retrieve certificate and hash values.
