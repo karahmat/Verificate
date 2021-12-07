@@ -34,7 +34,7 @@ With Azcredify,
 
 ## Digital Signing of Certificate
 The diagramm below illustrates the workflow when an education institute issues a certificate to the student:
-![Workflow Signature](https://imgur.com/a/GQhMpux.png)
+![Workflow Signature](https://i.imgur.com/SgENiOl.png)
 
 1. Institute issues and signs a document
 
