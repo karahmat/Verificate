@@ -36,7 +36,7 @@ const uploadMiddleware = multer({
 //=============================================
 
 //Dependencies and configuration for the Interplentary File System (IPFS)
-const {create} = require('ipfs-http-client');
+const {create} = require('ipfs');
 
 //Middleware
 router.use(uploadMiddleware);

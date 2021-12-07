@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 
 const userRoute = require('./controllers/userController');
 const documentRoute = require('./controllers/documentController');
-
+const domainRoute = require('./controllers/domainController');
 
 //Mongoose setup
 const db = mongoose.connection;
@@ -35,6 +35,7 @@ app.use(cookieParser());
 //Routes
 app.use('/api/users', userRoute);
 app.use('/api/documents', documentRoute);
+app.use('/api/domain', domainRoute);
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files

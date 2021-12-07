@@ -8,11 +8,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { UserContext } from '../App.js';
 
-export default function VerifyDomain() {
-    const userData = useContext(UserContext);
-    const [open, setOpen] = useState(false);
-    const [verified, setVerified] = useState(false);
-
+export default function VerifyDomain({setVerifyAlert}) {
+  const userData = useContext(UserContext);
+  const [open, setOpen] = useState(false);
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -22,16 +21,25 @@ export default function VerifyDomain() {
   };
 
   const handleVerify = async() => {
-    //redo - verify must be done through the backend!
+    //verify must be done through the backend to prevent CORS warning!
 
     try {
-      console.log(userData.domain + "/" + userData.walletAddress.slice(0,15) + ".txt");
-      const response = await fetch(userData.domain + "/" + userData.walletAddress.slice(0,15) + ".txt");     
-      if (response.status === 200 && userData.walletAddress.slice(0,15) === response.data) {
-          console.log(response.data);
-          // setVerified(true);
-          // setOpen(false);
+      
+      const domainToCheck = userData.domain + "/" + userData.walletAddress.slice(0,15) + ".txt";
+      const response = await fetch("/api/domain/verify", {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({domainToCheck, domainKey: userData.walletAddress.slice(0,15)})
+      }); 
+      const data = await response.json();
+      
+      if (data.data !== "") {
+          // data.data will either be "Verification successful" or "Verification failed"
+          setVerifyAlert(data.data);
+          setOpen(false);
+          window.location.assign('/profile');
       }
+
     } catch (err) {
           console.log(err);
     }    
@@ -47,7 +55,8 @@ export default function VerifyDomain() {
         <DialogContent>
           <DialogContentText>
             The domain in your profile is not yet confirmed. 
-            To verify your domain, create a blank text file with the filename: <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}.txt </Box>
+            To verify your domain, create a text file with the filename: <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}.txt </Box>, 
+            insert the text: <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}</Box> in the .txt file,
              and publish it on: <Box component="span" sx={{ color: "secondary.main"}}>{userData?.domain}</Box>/
             <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{userData?.walletAddress.slice(0,15)}.txt.</Box> 
             Thereafter, click on Verify Domain.
