@@ -8,7 +8,8 @@ export default function Explore() {
             <Typography variant="h4" component="h1" sx={{mb: 1.5, mt: 1.5}}>What's this about?</Typography>            
             <Typography variant="body1">This app allows you to issue and store verifiable certificates in the Ethereum blockchain.</Typography>
             <Typography variant="h5" component="h2" sx={{mb: 1.5, mt: 1.5, color: "primary.main"}}>Getting Started</Typography>            
-            <Typography variant="body1" sx={{mb: 1.2}}>You need to Register an account first. After successful registration, a wallet address and smart phrase will be generated for you. </Typography>
+            <Typography variant="body1" sx={{mb: 1.2}}>You need to register an account first by clicking on the Register button on the top right corner.</Typography>
+            <Typography variant="body1" sx={{mb: 1.2}}>After successful registration, a wallet address and smart phrase will be generated for you. Store this safely</Typography>
             <Typography variant="body1" sx={{mb: 1.2}}>
             Thereafter, please ensure that you have enough Ether in your testnet.
             For the Rinkeby testnet, you can go to a Rinkeby faucet to get your Ether.

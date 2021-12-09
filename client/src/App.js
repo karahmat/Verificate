@@ -1,5 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Explore from './pages/Explore';
 import Dashboard from './pages/Dashboard';
 import LoginPage from './pages/LoginPage';
@@ -9,6 +10,7 @@ import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import SendPhrase from './pages/SendPhrase';
 import VerifyDoc from './pages/VerifyDoc';
+import Homepage from './pages/Homepage';
 import {Switch, Route} from 'react-router';
 
 export const UserContext = createContext();
@@ -58,6 +60,9 @@ function App() {
         <Navbar />       
         <Switch>
           <Route exact={true} path='/'>
+            <Homepage />
+          </Route>
+          <Route path='/explore'>
             <Explore />
           </Route>
           <Route path='/dashboard'>
@@ -85,6 +90,7 @@ function App() {
             <VerifyDoc />
           </Route>
         </Switch> 
+        <Footer />
       </UserContext.Provider>        
     </div>
   );

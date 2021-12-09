@@ -96,7 +96,7 @@ export default function LoginPage({setLogin}) {
 
 
     return (        
-        <Container maxWidth="xs" sx={ {p: 2.0, margin: "20px auto" } }>
+        <Container maxWidth="xs" sx={ {p: 2.0, margin: "20px auto", height: "100vh" } }>
             <Typography variant="h4">Login Page</Typography>
             <Typography variant="h6" sx={{ mb: 2}}>Please enter the following to log in</Typography>
             <form noValidate autoComplete="off">  
