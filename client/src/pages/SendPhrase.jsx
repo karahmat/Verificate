@@ -41,7 +41,7 @@ ${location.state.privateKeys.map((key) => "\n"+key)}`;
 
             <Typography variant="h6" sx={{ mt: 2 }}>Private keys :</Typography>
             { location.state.privateKeys?.map( (key, index) => (
-                <Typography key={key} variant="body2">{index+1}. {key}</Typography>
+                <Typography key={key} variant="body2" sx={{wordBreak: "break-all"}}>{index+1}. {key}</Typography>
             ))}
 
             <Typography variant="body1" sx={{mt:2, mb: 2}}>Click on the button below to download a .txt file of your wallet addresses and private keys.</Typography>

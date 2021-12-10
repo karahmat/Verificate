@@ -7,7 +7,7 @@ contract Azcredify {
     struct Certificate {
         string documentHash;                
         string studentName;
-        string issuerName;
+        string issuerID;
     } 
     
     mapping(string => Certificate) certificates; //linking studentId and Certificate    
@@ -16,17 +16,17 @@ contract Azcredify {
     event CertificateInfo(
         string documentHash,
         string studentName,
-        string issuerName
+        string issuerID
     );
 
-    function setCertificate(string memory _studentId, string memory _documentHash, string memory _studentName, string memory _issuerName) external {        
+    function setCertificate(string memory _studentId, string memory _documentHash, string memory _studentName, string memory _issuerID) external {        
         certificates[_studentId] = Certificate({
             documentHash: _documentHash,            
             studentName: _studentName, 
-            issuerName: _issuerName
+            issuerID: _issuerID
         });
 
-        emit CertificateInfo(_documentHash, _studentName, _issuerName);
+        emit CertificateInfo(_documentHash, _studentName, _issuerID);
         
         listOfStudentIDs.push(_studentId);      
     }
@@ -40,7 +40,7 @@ contract Azcredify {
         return (
             certificates[_studentId].documentHash,
             certificates[_studentId].studentName,
-            certificates[_studentId].issuerName
+            certificates[_studentId].issuerID
         );
     }    
 }

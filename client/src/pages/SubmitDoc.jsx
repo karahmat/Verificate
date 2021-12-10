@@ -18,6 +18,7 @@ import Box from '@mui/material/Box';
 
 //own components
 import DeployPopup from '../components/DeployPopup';
+import AboutSubmit from '../components/AboutSubmit';
 
 const FormTextField = styled(TextField)(() => ({
     width: "100%",
@@ -196,10 +197,10 @@ export default function SubmitDoc() {
                         <LinearProgress />                        
                     )}
                 </form>
-                <Typography variant="subtitle2" sx={{ mt: 2 }}>Upon successful submission, the student will receive an email from you with the PDF file of the certificate, as well as a QR Code and a link to verify his/her certificate.</Typography>
+                <Typography variant="subtitle2" sx={{ mt: 2 }}>Please ensure you have at least 0.01 Ether in your account, before you click on Submit.</Typography>
                 </>
             )}
-        
+            <AboutSubmit />
         </Container>
         
     )

@@ -40,7 +40,7 @@ export default function VerifyDoc() {
         
         if (data.ipfsHash) {
             setIsUploading(false); 
-            if (data.ipfsHash === certDetails["1"]) {
+            if (data.ipfsHash === certDetails.documentHash) {
                 setIpfsHash("The IPFS hash matches. The certificate has not been tampered with.");
             } else {
                 setIpfsHash("The IPFS hash of the file you just uploaded does not match the one above");
@@ -59,8 +59,13 @@ export default function VerifyDoc() {
     return (
         <Container maxWidth="xs" sx={ {p: 2.0, margin: "20px auto", boxShadow: 3 } }>
             <Typography sx={{mb:2, mt: 1.5}} variant="h4" component="h1">Verification of Certificate</Typography>
-            <Typography sx={{mb:1.5}} variant="body1">This certificate was issued to <Box component="span" sx={{ color: "primary.main"}}>{certDetails["2"]} (Student ID: {certDetails["0"]})</Box> by <Box component="span" sx={{ color: "secondary.main"}}>{certDetails["3"]}</Box>.</Typography>
-            <Typography sx={{mb:1.5}} variant="body1">It has been stored on the Ethereum blockchain and has a IPFS hash of <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{certDetails["1"]}</Box> </Typography>
+            <Typography sx={{mb:1.5}} variant="body1">This certificate was issued to <Box component="span" sx={{ color: "primary.main"}}>{certDetails.studentName} (Student ID: {certDetails.studentID})</Box> by <Box component="span" sx={{ color: "secondary.main"}}>{certDetails.issuerName}</Box>.</Typography>
+            { certDetails?.domainValidated ? 
+                <Typography sx={{mb:1.5}}>The issuer has been verified to be true.</Typography> : 
+                <Typography sx={{mb:1.5}}>The issuer has not been verified.</Typography>
+            }
+            <Typography sx={{mb:1.5}} variant="body1">It has been stored on the Ethereum blockchain and has a IPFS hash of <Box component="span" sx={{ wordBreak: "break-all", color: "error.main" }}>{certDetails.documentHash}</Box> </Typography>
+            
             <Typography sx={{mb:1.5}} variant="body1">To check whether the certificate (in PDF form) sent to you by the applicant has been tampered with, upload the PDF form below.</Typography>
             <form>
                 <Box sx={{ display:"flex", alignItems: "center" }}>

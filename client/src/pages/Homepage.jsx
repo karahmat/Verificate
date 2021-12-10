@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {UserContext} from '../App';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -12,21 +13,22 @@ import ListItemText from '@mui/material/ListItemText';
 import DoneIcon from '@mui/icons-material/Done';
 
 function Homepage() {
-    const mainFeaturedPost = {
-        title: 'Access the Power of Blockchain Now',
-        description:
-          "Store and issue verifiable certificates into the Ethereum blockchain.",
-        image: '/images/blockchainBkground.jpeg',
-        imageText: 'main image description',
-        linkText: 'Get Started',
-      };
+  const userData = useContext(UserContext);
+  const mainFeaturedPost = {
+      title: 'Access the Power of Blockchain Now',
+      description:
+        "Store and issue verifiable certificates into the Ethereum blockchain.",
+      image: '/images/blockchainBkground.jpeg',
+      imageText: 'main image description',
+      linkText: 'Get Started',
+    };
 
-    const whyAzcredify = [
-        "Simple to Use - No further installation required", 
-        "No Need to Create Your Own Crypto Wallet", 
-        "Easy Verification Process", 
-        "Works on any Computer"
-    ]
+  const whyAzcredify = [
+      "Simple to Use - No further installation required", 
+      "No Need to Create Your Own Crypto Wallet", 
+      "Easy Verification Process", 
+      "Works on any Computer"
+  ]
 
   return (
     <>
@@ -70,9 +72,12 @@ function Homepage() {
                 Prevent Fraud. Allow Easy Verification
                 </Typography>
             </Slide>
-            <Button variant="contained" size="large" href="/explore" sx={{maxWidth: "33%", minWidth: "200px"}}>
+            { userData?.userId === "" ? 
+            <Button variant="contained" size="large" href="/explore" sx={{maxWidth: "33%", minWidth: "200px"}}>        
               {mainFeaturedPost.linkText}
-            </Button>
+            </Button> :
+            <Button variant="contained" size="large" href="/submitDoc"sx={{maxWidth: "33%", minWidth: "200px"}}>Submit Doc</Button> 
+             }
           </Box>
         </Grid>
      </Grid>

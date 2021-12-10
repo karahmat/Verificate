@@ -36,7 +36,7 @@ const uploadMiddleware = multer({
 //=============================================
 
 //Dependencies and configuration for the Interplentary File System (IPFS)
-const {create} = require('ipfs');
+const {create} = require('ipfs-http-client');
 
 //Middleware
 router.use(uploadMiddleware);
@@ -90,7 +90,7 @@ router.post('/deploy', requireAuth, async(req,res) => {
 router.post('/new', requireAuth, async(req, res) => {
 
     try {
-        const user = await User.findOne({_id: req.profile.id});
+        //const user = await User.findOne({_id: req.profile.id});
         const deployedContract = await EthereumNet.findOne({userId: req.profile.id, nameOfNet: req.body.testnet});
         
         const ipfsObj = {
@@ -112,7 +112,7 @@ router.post('/new', requireAuth, async(req, res) => {
                 studentId: req.body.studentId, 
                 documentHash: fileHash, 
                 studentName: req.body.studentName, 
-                issuerName: user.issuer
+                issuerID: req.profile.id
             };
 
             const {address} = web3.eth.accounts.privateKeyToAccount(req.body.privateKey);
@@ -164,7 +164,15 @@ router.get('/verify/:testnet/:txnHash', async (req, res) => {
         };
 
         const transactionData = await getTransactionData(req.params.txnHash, testnetObj[req.params.testnet]);        
-        res.status(200).json(transactionData);
+        const user = await User.findOne({_id: transactionData["3"]});
+
+        res.status(200).json({
+            documentHash: transactionData["1"],
+            studentName: transactionData["2"],
+            studentId: transactionData["0"],
+            issuerName: user.issuer, 
+            domainValidated: user.domainValidated
+        });
     } catch (err) {
         console.log(err);
     }
