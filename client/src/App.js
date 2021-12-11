@@ -11,11 +11,14 @@ import Profile from './pages/Profile';
 import SendPhrase from './pages/SendPhrase';
 import VerifyDoc from './pages/VerifyDoc';
 import Homepage from './pages/Homepage';
-import {Switch, Route} from 'react-router';
+import {Switch, Route, Redirect} from 'react-router';
+import { useCookies } from 'react-cookie';
 
 export const UserContext = createContext();
 
 function App() {
+  const [cookie, setCookie] = useCookies(['isLoggedIn']);
+  console.log("cookies", cookie.isLoggedIn);
   const [userData, setUserData] = useState({        
     userId: '',
     email: '',
@@ -38,7 +41,7 @@ function App() {
       const data = await response.json();      
 
       if (data.userId) {
-        setUserData(data)        
+        setUserData(data);
       } else if (data.errors) {
         setUserData(data.errors)
       }
@@ -51,7 +54,7 @@ function App() {
     }
   }, [login])
 
-
+  
 
   return (
 
@@ -65,30 +68,37 @@ function App() {
           <Route path='/explore'>
             <Explore />
           </Route>
-          <Route path='/dashboard'>
-            <Dashboard />
-          </Route>
-          <Route path='/settingPage'>
-            <Settings />
-          </Route>
-          <Route path='/submitDoc'>
-            <SubmitDoc />
-          </Route>
           <Route path='/signup'>
             <SignupPage login={login} setLogin={setLogin} />
           </Route>
           <Route path='/login' >
             <LoginPage setLogin={setLogin} />
           </Route>
-          <Route path='/profile' >
-            <Profile />
-          </Route>
-          <Route path='/sendPhrase' >
-            <SendPhrase />
-          </Route>
           <Route path='/documents/:testnet/:txnHash'>
             <VerifyDoc />
           </Route>
+          
+          {cookie.isLoggedIn && 
+          <>
+          <Route path='/profile'>
+            <Profile />
+          </Route>
+          <Route path='/submitDoc'>
+            <SubmitDoc />
+          </Route>
+          <Route path='/dashboard'>
+            <Dashboard />
+          </Route>
+          <Route path='/settingPage'>
+            <Settings />
+          </Route>
+          <Route path='/sendPhrase'>
+            <SendPhrase />
+          </Route>
+          </>
+          }            
+          
+          <Redirect to='/login' />
         </Switch> 
         <Footer />
       </UserContext.Provider>        

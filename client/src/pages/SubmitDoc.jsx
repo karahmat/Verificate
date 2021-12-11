@@ -197,7 +197,7 @@ export default function SubmitDoc() {
                         <LinearProgress />                        
                     )}
                 </form>
-                <Typography variant="subtitle2" sx={{ mt: 2 }}>Please ensure you have at least 0.01 Ether in your account, before you click on Submit.</Typography>
+                <Typography variant="subtitle2" sx={{ mt: 2 }}>Please ensure that you have at least 0.01 Ether in your account, before you click on Submit.</Typography>
                 </>
             )}
             <AboutSubmit />

@@ -10,7 +10,6 @@ import Alert from '@mui/material/Alert';
 
 export default function Profile() {
     const userData = useContext(UserContext);
-    console.log(userData);
     const [verifyAlert, setVerifyAlert] = useState("");
     return (
         <Container maxWidth="xs" sx={ {p: 2.0, margin: "20px auto", boxShadow: 3 } }>

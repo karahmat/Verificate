@@ -99,6 +99,7 @@ router.post('/signup', async (req,res) => {
         const token = createToken(user._id);
         //send cookie to browser, but it cannot be accessed by clicking document.cookie due to httpOnly: true
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here
+        res.cookie('isLoggedIn', true, {maxAge: maxAge * 1000}); //maxAge in milliseconds here
         res.status(201).json({ data: 'Success', dataMnemonic: mnemonic, privateKeys, addresses });   
     }
     catch (err) {   
@@ -139,7 +140,7 @@ router.post('/login', async (req,res) => {
         const user = await User.login(email,password); //static method                
         const token = createToken(user._id);
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge * 1000}); //maxAge in milliseconds here  
-             
+        res.cookie('isLoggedIn', true, {maxAge: maxAge * 1000})     
         res.status(200).json({ 
             userId: user._id, 
             email: user.email, 
@@ -161,6 +162,7 @@ router.post('/login', async (req,res) => {
 //user signout
 router.get('/logout', (req, res) => {
     res.cookie('jwt', '', { maxAge: 1} );
+    res.cookie('isLoggedIn', '', {maxAge: 1});
     res.status(200).json({data: 'signed out'})
 });
 
