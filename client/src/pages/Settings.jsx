@@ -12,7 +12,7 @@ export default function Settings() {
             <Typography variant="h4" sx={{color: "primary.main"}}>List of Smart Contracts</Typography>
             {userData.userId !== "" && userData.contractAddress.length === 0 && (
                 
-                <Typography variant="h6" color="error.main">You do not have any Smart Contract. Please deploy your contract first</Typography>                
+                <Typography variant="h6" mb={2} mt={2} color="error.main">You do not have any Smart Contract. Please deploy your contract first</Typography>                
                 
             )}
 

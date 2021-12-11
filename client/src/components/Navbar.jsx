@@ -68,7 +68,7 @@ export default function Navbar() {
                     component="div"
                     sx={{ mr: 2, display: { xs: 'none', sm: 'flex' } }}
                 >
-                    <Link href="/" sx={{ color: 'white' }} underline="none">AzCredify</Link>
+                    <Link href="/" sx={{ color: 'white' }} underline="none"><img src="/images/Logo.png" width="100px" alt="logo" /></Link>
                 </Typography>
                 { loggedIn && 
                 <Box sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}>
@@ -111,12 +111,11 @@ export default function Navbar() {
                 </Box>
                 }
                 <Typography
-                    variant="h6"
                     noWrap
                     component="div"
-                    sx={{ flexGrow: 1, display: { xs: 'flex', sm: 'none' } }}
+                    sx={{ flexGrow: 10, display: { xs: 'flex', sm: 'none' }, justifyContent: "center"}}
                 >
-                    <Link href="/" sx={{ color: 'white' }} underline="none">AzCredify</Link>
+                    <Link href="/" sx={{ color: 'white' }} underline="none"><img src="/images/Logo.png" width="100px" alt="logo" /></Link>
                 </Typography>
                 
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex' } }}>
@@ -145,7 +144,7 @@ export default function Navbar() {
                 <Box sx={{ flexGrow: 0 }}>
                     <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar>{ userData?.email?.slice(0,2).toUpperCase() }</Avatar>
+                        <Avatar sx={{bgcolor: "black", color: "#f2f8fc" }}>{ userData?.email?.slice(0,2).toUpperCase() }</Avatar>
                     </IconButton>
                     </Tooltip>
                     <Menu
