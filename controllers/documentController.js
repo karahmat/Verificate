@@ -73,7 +73,7 @@ router.post('/deploy', requireAuth, async(req,res) => {
             const {address} = web3.eth.accounts.privateKeyToAccount(req.body.privateKey);     
             const etherBalance = await getWalletBalance(testnetObj[req.body.testnet], address, req.body.privateKey);
             
-            if (parseFloat(etherBalance) >= 0.01) {
+            if (parseFloat(etherBalance) >= 0.0075) {
                 const contractAddress = await deployContract(testnetObj[req.body.testnet], address, req.body.privateKey);
             
                 const ethNet = await EthereumNet.create({
@@ -85,12 +85,12 @@ router.post('/deploy', requireAuth, async(req,res) => {
                 res.status(200).json({data: "Success"});
             } else {
                 console.log("Not enough Ether", etherBalance);
-                res.status(404).json({dataError: `You do not have at least 0.01 Ether to deploy Contract. You only have ${etherBalance} Ether. Please get more Ether`});
+                res.status(404).json({dataError: `You do not have at least 0.0075 Ether to deploy Contract. You only have ${etherBalance} Ether. Please get more Ether`});
             }
             
         } catch (err) {
-            console.log(err);
-            res.status(404).json({dataError: "Error at backend"})
+            const errMsg = err.message.split("{")[0];
+            res.status(404).json({dataError: errMsg});
         }
           
     }
@@ -127,7 +127,7 @@ router.post('/new', requireAuth, async(req, res) => {
             const {address} = web3.eth.accounts.privateKeyToAccount(req.body.privateKey);
             const etherBalance = await getWalletBalance(testnetObj[req.body.testnet], address, req.body.privateKey);
             
-            if (parseFloat(etherBalance) >= 0.01) {
+            if (parseFloat(etherBalance) >= 0.002) {
                 const transactionReceipt = await newCertificate(testnetObj[req.body.testnet], address, req.body.privateKey, deployedContract.address, certificateParams);
                 const rootPath = `${req.protocol}://${req.hostname}:${process.env.REACT_PORT}/documents/${req.body.testnet}`; 
                 await sendEmail(req.body.studentEmail, req.body.studentName, transactionReceipt.transactionHash, file, rootPath);
@@ -136,12 +136,12 @@ router.post('/new', requireAuth, async(req, res) => {
                 
                 res.status(200).json({data: "Success"});
             } else {
-                res.status(404).json({dataError: `You do not have at least 0.01 Ether. You only have ${etherBalance} Ether. Please get more Ether`});
+                res.status(404).json({dataError: `You do not have at least 0.002 Ether. You only have ${etherBalance} Ether. Please get more Ether`});
             }
         }  
     } catch(err) {
-        console.log(err);
-        res.status(404).json({dataError: "Error at backend"});
+        const errMsg = err.message.split("{")[0];
+        res.status(404).json({dataError: errMsg});
     }
 });
 

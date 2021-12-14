@@ -198,7 +198,7 @@ export default function SubmitDoc() {
                         <LinearProgress />                        
                     )}
                 </form>
-                <Typography variant="subtitle2" sx={{ mt: 2 }}>Please ensure that you have at least 0.01 Ether in your account, before you click on Submit.</Typography>
+                <Typography variant="subtitle2" sx={{ mt: 2 }}>Please ensure that you have at least 0.002 Ether in your account, before you click on Submit.</Typography>
                 { etherErrorMsg !== '' && <Typography variant="subtitle2" color="error.main" ml={1.2} mr={1.1} mb={1.2}>{etherErrorMsg}</Typography>}
                 </>
             )}

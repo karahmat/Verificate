@@ -13,8 +13,9 @@ const newCertificate = async(testnetArg, addressArg, privateKeyArg, contractAdd,
     const web3 = new Web3(provider);    
     let contract = new web3.eth.Contract(abi, contractAdd);
     
-    const transactionReceipt = await contract.methods.setCertificate(studentId, documentHash, studentName, issuerID).send({gas: '2000000', from: addressArg});   
-    
+    const transactionReceipt = await contract.methods.setCertificate(studentId, documentHash, studentName, issuerID).send({gas: '200000', gasPrice: '10000000000', from: addressArg});   
+    const estimateGasNeeded = await contract.methods.setCertificate(studentId, documentHash, studentName, issuerID).estimateGas();
+    console.log("gas during setCertificate: ", estimateGasNeeded);
     return transactionReceipt;    
 }
 
