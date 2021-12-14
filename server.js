@@ -9,6 +9,7 @@ const PORT = process.env.PORT;
 const userRoute = require('./controllers/userController');
 const documentRoute = require('./controllers/documentController');
 const domainRoute = require('./controllers/domainController');
+//const paymentRoute = require('./controllers/paymentController.js');
 
 //Mongoose setup
 const db = mongoose.connection;
@@ -31,11 +32,22 @@ db.on('disconnected', () => console.log('mongo disconnected'));
 //Middleware
 app.use(express.json());
 app.use(cookieParser());
+// app.use((_, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*')
+//   res.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept'
+//   )
+//   next()
+// });
+
 
 //Routes
 app.use('/api/users', userRoute);
 app.use('/api/documents', documentRoute);
 app.use('/api/domain', domainRoute);
+//app.use('/api/stripe', paymentRoute);
+
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files

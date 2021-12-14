@@ -36,7 +36,7 @@ const initialState = {
 export default function SubmitDoc() {
     const userData = useContext(UserContext);           
     const [errors, setErrors] = useState({});
-    const [etherErrorMsg, setEtherErrorMsg] = useState();
+    const [etherErrorMsg, setEtherErrorMsg] = useState('');
     const [formInputs, dispatch] = useReducer(reducer, initialState);
     const [isUploading, setIsUploading] = useState(false);
    
@@ -128,8 +128,9 @@ export default function SubmitDoc() {
                 setIsUploading(false);                
                 window.location.assign(`/dashboard`);
                 // redirect user to /posts
-            } else if (data.dataErrors) {                
-                setEtherErrorMsg(data.dataErrors);
+            } else if (data.dataError) {                
+                setEtherErrorMsg(data.dataError);
+                setIsUploading(false);   
             }
         }
         
@@ -198,6 +199,7 @@ export default function SubmitDoc() {
                     )}
                 </form>
                 <Typography variant="subtitle2" sx={{ mt: 2 }}>Please ensure that you have at least 0.01 Ether in your account, before you click on Submit.</Typography>
+                { etherErrorMsg !== '' && <Typography variant="subtitle2" color="error.main" ml={1.2} mr={1.1} mb={1.2}>{etherErrorMsg}</Typography>}
                 </>
             )}
             <AboutSubmit />

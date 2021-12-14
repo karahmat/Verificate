@@ -11,12 +11,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
 
 export default function DeployPopup({method, setCertificates}) {
     console.log("Method: ", method);
     const userData = useContext(UserContext);               
-    const [etherErrorMsg, setEtherErrorMsg] = useState();
+    const [etherErrorMsg, setEtherErrorMsg] = useState('');
     const [deployState, setDeployState] = useState({
         testnet: '',
         privateKey: ''
@@ -41,7 +42,7 @@ export default function DeployPopup({method, setCertificates}) {
     }
 
     const handleDeployment = async () => {
-        setOpen(false);
+        
         const response = await fetch(`/api/documents/${method}`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },  
@@ -56,13 +57,15 @@ export default function DeployPopup({method, setCertificates}) {
         
         if(data.data === "Success") {     
             if (method === "deploy") {
+                setOpen(false);
                 window.location.assign('/submitDoc');
             } else {
                 console.log(data.result);
                 setCertificates(data.result);
+                setOpen(false);
             }
-        } else if (data.errors) {                        
-            setEtherErrorMsg(data.errors);
+        } else if (data.dataError) {                        
+            setEtherErrorMsg(data.dataError);
         }
     }
 
@@ -108,6 +111,7 @@ export default function DeployPopup({method, setCertificates}) {
                 <Button onClick={handleClose}>Cancel</Button>
                 <Button onClick={handleDeployment}>{method === "deploy" ? "Deploy" : "Load Certificates"}</Button>
                 </DialogActions>
+                { etherErrorMsg !== '' && <Typography variant="subtitle2" color="error.main" ml={2} mr={1.1} mb={1.2}>{etherErrorMsg}</Typography>}
             </Dialog>
         </div>
     )

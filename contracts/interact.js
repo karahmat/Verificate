@@ -38,5 +38,18 @@ const getAllCertificates = async(testnetArg, addressArg, privateKeyArg, contract
     return certificates;
 }
 
+const getWalletBalance = async(testnetArg, addressArg, privateKeyArg) => {   
+            
+    const provider = new HDWalletProvider(
+        privateKeyArg,
+        testnetArg,
+    );
 
-module.exports = {newCertificate, getAllCertificates};
+    const web3 = new Web3(provider);    
+    const balanceWei = await web3.eth.getBalance(addressArg);
+    const balanceEther = web3.utils.fromWei(balanceWei, "ether");
+        
+    return balanceEther;
+}
+
+module.exports = {newCertificate, getAllCertificates, getWalletBalance};
