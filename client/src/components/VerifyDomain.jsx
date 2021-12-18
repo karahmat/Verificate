@@ -34,6 +34,7 @@ export default function VerifyDomain({setVerifyAlert}) {
       const data = await response.json();
       
       if (data.data !== "") {
+          console.log(data.data);
           // data.data will either be "Verification successful" or "Verification failed"
           setVerifyAlert(data.data);
           setOpen(false);

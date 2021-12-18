@@ -77,12 +77,16 @@ function App() {
           <Route path='/documents/:testnet/:txnHash'>
             <VerifyDoc />
           </Route>
-          
-          {cookie.isLoggedIn && 
-          <>
+          <Route path='/sendPhrase'>
+            <SendPhrase />
+          </Route>
           <Route path='/profile'>
             <Profile />
           </Route>
+          
+          {cookie.isLoggedIn && 
+          <>
+          
           <Route path='/submitDoc'>
             <SubmitDoc />
           </Route>
@@ -92,9 +96,7 @@ function App() {
           <Route path='/settingPage'>
             <Settings />
           </Route>
-          <Route path='/sendPhrase'>
-            <SendPhrase />
-          </Route>
+          
           </>
           }            
           

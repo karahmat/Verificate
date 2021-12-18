@@ -59,7 +59,7 @@ export default function VerifyDoc() {
     return (
         <Container maxWidth="xs" sx={ {p: 2.0, margin: "20px auto", boxShadow: 3 } }>
             <Typography sx={{mb:2, mt: 1.5}} variant="h4" component="h1">Verification of Certificate</Typography>
-            <Typography sx={{mb:1.5}} variant="body1">This certificate was issued to <Box component="span" sx={{ color: "primary.main"}}>{certDetails.studentName} (Student ID: {certDetails.studentID})</Box> by <Box component="span" sx={{ color: "secondary.main"}}>{certDetails.issuerName}</Box>.</Typography>
+            <Typography sx={{mb:1.5}} variant="body1">This certificate was issued to <Box component="span" sx={{ color: "primary.main"}}>{certDetails.studentName} (Student ID: {certDetails.studentId})</Box> by <Box component="span" sx={{ color: "secondary.main"}}>{certDetails.issuerName}</Box>.</Typography>
             { certDetails?.domainValidated ? 
                 <Typography sx={{mb:1.5}}>The issuer has been verified to be true.</Typography> : 
                 <Typography sx={{mb:1.5}}>The issuer has not been verified.</Typography>
