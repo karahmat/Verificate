@@ -2,6 +2,7 @@
 *a blockchain-based app to issue and verify education certificates*
 
 ## Tech Stack
+![Tech Stack](https://i.imgur.com/Ebb48wf.png)
 I developed this app using NodeJS at the backend, and ReactJS at the frontend. I used Solidity to develop the Smart Contract to interact with the blockchain. Other libraries used in the app:
 
 - Web3: a JS library to deploy and interact with the Smart Contract
