@@ -159,7 +159,8 @@ router.post('/verifyIpfs', async (req,res) => {
             const file = req.files[0];
             const fileBuffer = fs.readFileSync(file.path);
             const fileAdded = await ipfs.add({path: file.filename, content: fileBuffer});        
-            const fileHash = fileAdded.cid.toString();        
+            const fileHash = fileAdded.cid.toString(); 
+            fs.unlinkSync(`./uploads/${file.filename}`);                 
             res.status(200).json({ipfsHash: fileHash});
         }
     } catch (err) {
