@@ -1,5 +1,5 @@
-# AzCredify 
-*a blockchain-based app to issue and verify education certificates*
+# Verificate 
+*a blockchain-based app for education institutes to issue verifiable certificates*
 
 ## Tech Stack
 ![Tech Stack](https://i.imgur.com/Ebb48wf.png)
