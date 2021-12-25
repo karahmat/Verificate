@@ -23,7 +23,7 @@ function Homepage() {
       linkText: 'Get Started',
     };
 
-  const whyAzcredify = [
+  const whyVerificate = [
       "Simple to Use - No further installation required", 
       "No Need to Create Your Own Crypto Wallet", 
       "Easy Verification Process", 
@@ -88,9 +88,9 @@ function Homepage() {
         pr: { md: 0 },
         }}
     >
-        <Typography variant="h4" mb={2} color="darkblue" sx={{fontWeight: "bold"}}>Why AzCredify?</Typography>
+        <Typography variant="h4" mb={2} color="darkblue" sx={{fontWeight: "bold"}}>Why Verificate?</Typography>
         <List>
-            { whyAzcredify.map((reason) => (
+            { whyVerificate.map((reason) => (
             <ListItem>
                 <ListItemIcon>
                     <DoneIcon />
