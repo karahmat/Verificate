@@ -18,14 +18,14 @@ Before hiring an applicant, an employer needs to verify the educational details 
 Some institutes store certificates in digital form but they are stored in a centralized network where there is a chance of certificate tampering. These may increase the cases of fraud since there is no means of security and integrity of the data both in manual and in digital form. 
 
 ## Solution
-AzCredify provides a platform for education institutes to store and verify the student credentials using blockchain technology. 
+Verificate provides a platform for education institutes to store and verify the student credentials using blockchain technology. 
 
 Whenever a certificate is added into a block, it will return a unique transaction ID and a hash of the document stored. The certificate file, transaction ID and document hash are then sent to the student.
 
-The company can verify whether the certificate provided by the student is authorized or has been tampered with or not through Azcredify.
+The company can verify whether the certificate provided by the student is authorized or has been tampered with or not through Verificate.
 
 ### Advantages
-With Azcredify,
+With Verificate,
 
 - No one can tamper the certificate or create fake degrees. 
 
