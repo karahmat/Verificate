@@ -1,6 +1,8 @@
 # Verificate 
 *a blockchain-based app for education institutes to issue verifiable certificates*
 
+*If you are only interested to test/run the application, click [here](https://verificateapp.herokuapp.com/).
+
 ## Tech Stack
 ![Tech Stack](https://i.imgur.com/Ebb48wf.png)
 I developed this app using NodeJS at the backend, and ReactJS at the frontend. I used Solidity to develop the Smart Contract to interact with the blockchain. Other libraries used in the app:
