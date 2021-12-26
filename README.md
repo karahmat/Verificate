@@ -1,7 +1,10 @@
 # Verificate 
+
 *a blockchain-based app for education institutes to issue verifiable certificates*
 
-*If you are only interested to test/run the application, click [here](https://verificateapp.herokuapp.com/).
+## Deployed App 
+
+*If you are only interested to test/run the application, click [here](https://verificateapp.herokuapp.com/).*
 
 ## Tech Stack
 ![Tech Stack](https://i.imgur.com/Ebb48wf.png)
