@@ -159,11 +159,22 @@ router.post('/new', requireAuth, async(req, res) => {
 
 router.post('/verifyIpfs', async (req,res) => {
 
+    const projectId = process.env.IPFS_PROJECT_ID;
+    const projectSecret = process.env.IPFS_SECRET_KEY;
+    const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
     
 
     const ipfsObj = {
         'localhost': {host: 'localhost', port: '5001', protocol: 'http'},
-        'infura': {host: 'ipfs.infura.io', port: '5001', protocol: 'https', path: 'api/v0'}
+        'infura': {
+            host: 'ipfs.infura.io', 
+            port: '5001', 
+            protocol: 'https', 
+            path: 'api/v0', 
+            headers: {
+                authorization: auth,
+            }
+        }
     };
 
     try {
