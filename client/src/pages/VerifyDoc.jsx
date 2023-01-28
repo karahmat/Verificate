@@ -19,10 +19,10 @@ export default function VerifyDoc() {
         const response = await fetch(`/api/documents/verify/${testnet}/${txnHash}`, {
             method: 'GET',               
         });
-        const data = await response.json();
-        if(data) {
-            console.log(data);
-            setCertDetails(data);
+        // const data = await response.json();
+        if(response) {
+            console.log(response);
+            setCertDetails(response);
         }
     }    
 

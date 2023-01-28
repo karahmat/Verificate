@@ -12,7 +12,7 @@ export default function Explore() {
             <Typography variant="body1" sx={{mb: 1.2}}>2. After successful registration, a wallet address and smart phrase will be generated for you. Store this safely</Typography>
             <Typography variant="body1" sx={{mb: 1.2}}>
             3. Thereafter, please ensure that you have enough Ether in your testnet.<br /><br />
-            - For the Rinkeby testnet, you can go to a Rinkeby faucet to get your Ether.<br /><br />
+            - For the Goerli testnet, you can go to a Goerli faucet to get your Ether.<br /><br />
             - For the localhost testnet, you can use Ganache or some testRPC library to generate the account on your localhost.<br /><br />
             </Typography>
             <Typography variant="body1" sx={{mb: 1.2}}>4. Then, deploy your smart contract. Every issuer will have a unique contract address. </Typography>

@@ -34,7 +34,7 @@ export default function Settings() {
                 <Typography variant="bodytext1">
                     A Smart Contract is a set of instructions coded in the Solidity programming language, allowing you to interact with the Ethereum blockchain. <br /><br />
                     Before you can interact with the blockchain, you need to Deploy the Smart Contract to the blockchain.<br/><br />
-                    Here, we are giving you the option of deploying your Smart Contract on the local blockchain, the Rinkeby testnet (the first two for testing purposes) or the Main net. 
+                    Here, we are giving you the option of deploying your Smart Contract on the local blockchain, the Goerli testnet (the first two for testing purposes) or the Main net. 
                     Please ensure you have enough Ether before deploying your Smart Contract. 
                 </Typography>
             </Box>

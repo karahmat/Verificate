@@ -91,7 +91,7 @@ export default function DeployPopup({method, setCertificates}) {
                     onChange={handleDeployInputChange}
                     >
                         <MenuItem value="localhost">Localhost</MenuItem>
-                        <MenuItem value="rinkeby">Rinkeby</MenuItem>
+                        <MenuItem value="goerli">Goerli</MenuItem>
                         <MenuItem value="mainnet">Mainnet</MenuItem>                        
                     </Select>
                 </FormControl>  

@@ -44,8 +44,8 @@ router.use(uploadMiddleware);
 //HTTP routes for different testnets and mainnet
 const testnetObj = {
     'localhost': 'http://localhost:8545',
-    'rinkeby' : `https://rinkeby.infura.io/v3/${process.env.RINKEBY_API}`,
-    'mainnet' : `https://rinkeby.infura.io/v3/${process.env.MAINNET_API}`,
+    'rinkeby' : `https://goerli.infura.io/v3/${process.env.RINKEBY_API}`, 
+    'mainnet' : `https://goerli.infura.io/v3/${process.env.MAINNET_API}`,
 };
 
 router.post('/certificates', requireAuth, async(req, res) => {
@@ -177,8 +177,8 @@ router.get('/verify/:testnet/:txnHash', async (req, res) => {
     try {
         const testnetObj = {
             'localhost': 'http://localhost:8545',
-            'rinkeby' : `https://rinkeby.infura.io/v3/${process.env.RINKEBY_API}`,
-            'mainnet' : `https://rinkeby.infura.io/v3/${process.env.MAINNET_API}`,
+            'rinkeby' : `https://goerli.infura.io/v3/${process.env.RINKEBY_API}`,
+            'mainnet' : `https://goerli.infura.io/v3/${process.env.MAINNET_API}`,
         };
 
         const transactionData = await getTransactionData(req.params.txnHash, testnetObj[req.params.testnet]);        
