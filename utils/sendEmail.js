@@ -31,6 +31,9 @@ const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootSe
   
   //To create QR code file
   const qrCodeFile = `${appRoot}/../uploads/${Date.now()}_qrcode.png`;
+
+  console.log("qrCodeFile", qrCodeFile);
+
   await QRCode.toFile(qrCodeFile, `${rootServer}/${txnHash}`);
   // rootServer = http://domain.name.com/documents/testnet (whereby testnet refers to either {localhost, goerli, mainnet}, where the smart contract is deployed)    
   // upload the QR code to cloudinary and optain the url of the stored file. I have to do this since most web email like Google Mail cannot read base64 images.
@@ -41,7 +44,7 @@ const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootSe
     path: pdfFileRaw.path
   }
 
-  console.log("after pdfFile");
+  console.log("url of QRcode", url);
   
   const htmlTemplate = `
   <p>Dear ${receiverName}, </p>
