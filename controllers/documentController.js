@@ -44,7 +44,7 @@ router.use(uploadMiddleware);
 //HTTP routes for different testnets and mainnet
 const testnetObj = {
     'localhost': 'http://localhost:8545',
-    'rinkeby' : `https://goerli.infura.io/v3/${process.env.RINKEBY_API}`, 
+    'goerli' : `https://goerli.infura.io/v3/${process.env.RINKEBY_API}`, 
     'mainnet' : `https://goerli.infura.io/v3/${process.env.MAINNET_API}`,
 };
 
@@ -177,7 +177,7 @@ router.get('/verify/:testnet/:txnHash', async (req, res) => {
     try {
         const testnetObj = {
             'localhost': 'http://localhost:8545',
-            'rinkeby' : `https://goerli.infura.io/v3/${process.env.RINKEBY_API}`,
+            'goerli' : `https://goerli.infura.io/v3/${process.env.RINKEBY_API}`,
             'mainnet' : `https://goerli.infura.io/v3/${process.env.MAINNET_API}`,
         };
 
