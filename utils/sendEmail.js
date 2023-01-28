@@ -17,14 +17,17 @@ const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootSe
   // create reusable transporter object using the default SMTP transport
   const transporter = nodemailer.createTransport({
     host: 'smtp.mail.yahoo.com',
+    service: 'yahoo',
     port: 465,    
-    secure: true,
+    secure: false,
     auth: {
       user: process.env.NODEMAILER_EMAIL, 
       pass: process.env.NODEMAILER_PW, 
     },
+    logger: true
   });
 
+  console.log("After email transporter created")
   
   //To create QR code file
   const qrCodeFile = `${appRoot}/../uploads/${Date.now()}_qrcode.png`;
@@ -37,6 +40,8 @@ const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootSe
     filename: pdfFileRaw.filename, 
     path: pdfFileRaw.path
   }
+
+  console.log("after pdfFile");
   
   const htmlTemplate = `
   <p>Dear ${receiverName}, </p>
