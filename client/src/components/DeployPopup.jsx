@@ -78,7 +78,7 @@ export default function DeployPopup({method, setCertificates}) {
                 <DialogTitle>Smart Contract</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
-                    To deploy or interact with your Smart Contract, you will need to re-enter your password.
+                    To deploy or interact with your Smart Contract, you will need to re-enter your private key.
                 </DialogContentText>
                 <FormControl variant="filled" color="success" fullWidth margin="normal" sx={{maxWidth: "300px"}}>
                     <InputLabel id="testnet">Choose an ETH Network</InputLabel>

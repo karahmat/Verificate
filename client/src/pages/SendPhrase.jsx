@@ -47,7 +47,7 @@ ${location.state.privateKeys.map((key) => "\n"+key)}`;
             <Typography variant="body1" sx={{mt:2, mb: 2}}>Click on the button below to download a .txt file of your wallet addresses and private keys.</Typography>
             
             { txtFile && (
-                <Button href={txtFile} download="azcredifyKeys.txt" variant="contained" endIcon={<FileDownloadIcon />}>Download Keys</Button>
+                <Button href={txtFile} download="verificateKeys.txt" variant="contained" endIcon={<FileDownloadIcon />}>Download Keys</Button>
             )}
             <Typography variant="subtitle2" sx={{mt:2}}>You can also create more addresses and private keys through the mnemonic above using apps like <a href="https://allprivatekeys.com/mnemonic-code-converter">All Private Keys</a>.</Typography>
         </Container>

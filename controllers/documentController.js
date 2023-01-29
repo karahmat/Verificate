@@ -141,7 +141,13 @@ router.post('/new', requireAuth, async(req, res) => {
             
             if (parseFloat(etherBalance) >= 0.002) {
                 const transactionReceipt = await newCertificate(testnetObj[req.body.testnet], address, req.body.privateKey, deployedContract.address, certificateParams);
-                const rootPath = `${req.protocol}://${req.hostname}:${process.env.REACT_PORT}/documents/${req.body.testnet}`; 
+                let rootPath = '';
+                if (process.env.NODE_ENV === 'production') {
+                    rootPath = `https://${req.hostname}/documents/${req.body.testnet}`; 
+                } else {
+                    rootPath = `${req.protocol}://${req.hostname}:${process.env.REACT_PORT}/documents/${req.body.testnet}`; 
+                }
+                  
                 await sendEmail(req.body.studentEmail, req.body.studentName, transactionReceipt.transactionHash, file, rootPath);
 
                 fs.unlinkSync(`./uploads/${file.filename}`);            
@@ -152,6 +158,7 @@ router.post('/new', requireAuth, async(req, res) => {
             }
         }  
     } catch(err) {
+        console.log("err in catch block", err);
         const errMsg = err.message.split("{")[0];
         res.status(404).json({dataError: errMsg});
     }

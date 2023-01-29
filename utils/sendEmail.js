@@ -9,7 +9,8 @@ global.appRoot = path.resolve(__dirname);
 cloudinary.config({ 
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
     api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true
 });
 
 const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootServer) => {
@@ -19,7 +20,7 @@ const sendEmail = async(receiverEmail, receiverName, txnHash, pdfFileRaw, rootSe
     host: 'smtp.mail.yahoo.com',
     service: 'yahoo',
     port: 465,    
-    secure: false,
+    secure: true,
     auth: {
       user: process.env.NODEMAILER_EMAIL, 
       pass: process.env.NODEMAILER_PW, 

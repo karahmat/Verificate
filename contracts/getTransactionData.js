@@ -8,13 +8,14 @@ const getTransactionData = async (transactionHash, testnetArg) => {
         process.env.SUPER_PRIVATEKEY,
         testnetArg
     );
-    
+
     const web3 = new Web3(provider);     
-    const result = await web3.eth.getTransaction(transactionHash);    
+    const result = await web3.eth.getTransaction(transactionHash);        
     const tx_data = result.input;
-    const input_data = '0x' + tx_data.slice(10); // get only data without function selector
+    const input_data = tx_data.slice(10); // get only data without function selector
 
     const params = await web3.eth.abi.decodeParameters(['string', 'string', 'string', 'string'], input_data);
+    console.log("params", params);
     return params;
     
 }
